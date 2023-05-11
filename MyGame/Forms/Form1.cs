@@ -22,13 +22,14 @@ namespace MyGame
         public int currAnimation;
         public string skin;
         public int currFlip;
+        public int currColor = 1;
 
 
         public Form1()
         {
             InitializeComponent();
 
-            timer1.Interval = 20;
+            timer1.Interval = 10;
             timer1.Tick += new EventHandler(Update);
 
             MessageBox.Show("1) Соберите все колбочки, чтобы завершить уровень; \n" +
@@ -96,15 +97,19 @@ namespace MyGame
                     MakeMove(1, -speed, 0, 5);
                     break;
                 case Keys.D1:
+                    currColor = 1;
                     MakeSkin("koldunred");
                     break;
                 case Keys.D2:
+                    currColor = 2;
                     MakeSkin("koldunblue");
                     break;
                 case Keys.D3:
+                    currColor = 3;
                     MakeSkin("koldungreen");
                     break;
                 case Keys.D4:
+                    currColor = 4;
                     MakeSkin("koldunpurple");
                     break;
             }
@@ -155,8 +160,8 @@ namespace MyGame
         private void Init()
         {
             MapController.Init();
-            this.Width = MapController.GetWidth();
-            this.Height = MapController.GetHeight();
+            this.Width = 1900;
+            this.Height = 1000;
 
 
 

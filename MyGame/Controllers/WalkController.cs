@@ -16,7 +16,7 @@ namespace MyGame.Controllers
             {
                 for (int j = player.posY / MapController.cellSizeY; j < (player.posY + MapController.cellSizeY) / MapController.cellSizeY; j++)
                 {
-                    if (MapController.map[j, i] == 0)
+                    if (MapController.map[j, i] == 0 || MapController.map[j, i] == 2)
                     {
                         if (player.dirY > 0)
                             player.dirY -= Hit;
