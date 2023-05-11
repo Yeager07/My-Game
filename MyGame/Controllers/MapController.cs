@@ -99,7 +99,7 @@ namespace MyGame.Controllers
             return redMap;
         }
 
-        public static void DrawMap(Graphics g)
+        public static void DrawMap(Graphics g, string currColor)
         {
             cellLimitX = GetWidth() / cellSizeX;
             cellLimitY = GetHeight() / cellSizeY;
@@ -110,7 +110,7 @@ namespace MyGame.Controllers
                 {
                     if (map[i, j] == 2)
                     {
-                        g.DrawImage(new Bitmap(@"..\..\..\Sprites\umen.png"), new Rectangle(new Point(cellSizeX * j, cellSizeY * i), new Size(cellSizeX, cellSizeY)), 0, 0, 59, 59, GraphicsUnit.Pixel);
+                        g.DrawImage(new Bitmap(@"..\..\..\Sprites\" + currColor + ".png"), new Rectangle(new Point(cellSizeX * j, cellSizeY * i), new Size(cellSizeX, cellSizeY)), 0, 0, 59, 59, GraphicsUnit.Pixel);
                     }
                     else
                         g.DrawImage(imgMap,

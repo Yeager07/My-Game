@@ -22,7 +22,7 @@ namespace MyGame
         public int currAnimation;
         public string skin;
         public int currFlip;
-        public int currColor = 1;
+        public string currColor = "wallRed";
 
 
         public Form1()
@@ -34,8 +34,8 @@ namespace MyGame
 
             MessageBox.Show("1) Соберите все колбочки, чтобы завершить уровень; \n" +
                 "2) Старайтесь не попасться монстрам (иначе вам придется начать сначала);\n" +
-                @"3) С помощью клавиш ""1"", ""2"", ""3"", 4"" (не на Num-паде) вы сможете менять цвет комнаты (попробуйте, и узнаете зачем это нужно); \n" +
-                @"4) Управление осуществляется клавишами ""WASD"" вашего устройства; \n" +
+                "3) С помощью клавиш '1', '2', '3', '4' (не на Num-паде) вы сможете менять цвет комнаты (попробуйте, и узнаете зачем это нужно);\n" +
+                "4) Управление осуществляется клавишами-стрелочками вашего устройства;\n" +
                 "5) Движение по диагонали запрещено; \n" +
                 "Удачи, у вас все получится!!! \n", "Правила Игры") ;
 
@@ -84,32 +84,32 @@ namespace MyGame
         {
             switch (e.KeyCode)
             {
-                case Keys.W:
+                case Keys.Up:
                     MakeMove(1, 0, -speed, 3);
                     break;
-                case Keys.S:
+                case Keys.Down:
                     MakeMove(1, 0, speed, 1);
                     break;
-                case Keys.D:
+                case Keys.Right:
                     MakeMove(-1, speed, 0, 5);
                     break;
-                case Keys.A:
+                case Keys.Left:
                     MakeMove(1, -speed, 0, 5);
                     break;
                 case Keys.D1:
-                    currColor = 1;
+                    currColor = "wallRed";
                     MakeSkin("koldunred");
                     break;
                 case Keys.D2:
-                    currColor = 2;
+                    currColor = "wallBlue";
                     MakeSkin("koldunblue");
                     break;
                 case Keys.D3:
-                    currColor = 3;
+                    currColor = "wallGreen";
                     MakeSkin("koldungreen");
                     break;
                 case Keys.D4:
-                    currColor = 4;
+                    currColor = "wallPurple";
                     MakeSkin("koldunpurple");
                     break;
             }
@@ -124,19 +124,19 @@ namespace MyGame
         {
             switch (e.KeyCode)
             {
-                case Keys.W:
+                case Keys.Up:
                     currAnimation = 2;
                     player.dirY = 0;
                     break;
-                case Keys.S:
+                case Keys.Down:
                     currAnimation = 0;
                     player.dirY = 0;
                     break;
-                case Keys.D:
+                case Keys.Right:
                     currAnimation = 4;
                     player.dirX = 0;
                     break;
-                case Keys.A:
+                case Keys.Left:
                     currAnimation = 4;
                     player.dirX = 0;
                     break;
@@ -174,7 +174,7 @@ namespace MyGame
         private void OnPaint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-            MapController.DrawMap(g);
+            MapController.DrawMap(g, currColor);
             player.PlayAnimation(g);
 
         }
