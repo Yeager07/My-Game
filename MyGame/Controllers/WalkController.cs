@@ -1,6 +1,7 @@
 ﻿using MyGame.Entites;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,10 @@ namespace MyGame.Controllers
                         else
                             player.dirX += Hit;
                     }
+                    /*else if (MapController.map[i,j] == 3)
+                    {
+                        MapController.map[i, j] = 1;
+                    }*/
                 }
             }
         }

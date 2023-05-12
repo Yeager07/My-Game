@@ -148,6 +148,11 @@ namespace MyGame
             }
         }
 
+        public string GetColor()
+        {
+            return currColor;
+        }
+
         private void Update(object sender, EventArgs e)
         {
             WalkController.IsCollide(player);
@@ -174,6 +179,7 @@ namespace MyGame
         private void OnPaint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
+            MapController.GetMap(currColor);
             MapController.DrawMap(g, currColor);
             player.PlayAnimation(g);
 
