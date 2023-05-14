@@ -24,6 +24,7 @@ namespace MyGame.Entites
         public int stayUpFrames;
         public int stayDownFrames;
         public int staySideFrames;
+        public int score;
 
         // Текущий фрейм, фнимация и ограничение
         public int currFrame;
@@ -38,7 +39,7 @@ namespace MyGame.Entites
         public Image PlayerSprites;
 
         // Инициализация персонажа
-        public Player(int posX, int posY, int walkUpFrames, int walkDownFrames, int walkSideFrames, int stayUpFrames, int stayDownFrames, int staySideFrames)
+        public Player(int posX, int posY, int walkUpFrames, int walkDownFrames, int walkSideFrames, int stayUpFrames, int stayDownFrames, int staySideFrames, int score)
         {
             this.posX = posX;
             this.posY = posY;
@@ -48,6 +49,7 @@ namespace MyGame.Entites
             this.stayUpFrames = stayUpFrames;
             this.stayDownFrames = stayDownFrames;
             this.staySideFrames = staySideFrames;
+            this.score = score;
             sizeX = 70;
             sizeY = 110;
             currAnimation = 0;

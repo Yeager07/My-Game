@@ -17,6 +17,12 @@ namespace MyGame.Controllers
             {
                 for (int j = player.posY / MapController.cellSizeY; j < (player.posY + MapController.cellSizeY) / MapController.cellSizeY; j++)
                 {
+                    if (MapController.map[j, i] == 3)
+                    {
+                        player.score += 1;
+                        MapController.map[j, i] = 1;
+                    }
+
                     if (MapController.map[j, i] == 0 || MapController.map[j, i] == 2)
                     {
                         if (player.dirY > 0)
@@ -28,10 +34,6 @@ namespace MyGame.Controllers
                         else
                             player.dirX += Hit;
                     }
-                    /*else if (MapController.map[i,j] == 3)
-                    {
-                        MapController.map[i, j] = 1;
-                    }*/
                 }
             }
         }

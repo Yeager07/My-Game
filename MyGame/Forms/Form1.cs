@@ -22,14 +22,13 @@ namespace MyGame
         public int currAnimation;
         public string skin;
         public int currFlip;
-        public string currColor = "wallRed";
-
+        public string currColor = "Red";
 
         public Form1()
         {
             InitializeComponent();
 
-            timer1.Interval = 10;
+            timer1.Interval = 5;
             timer1.Tick += new EventHandler(Update);
 
             MessageBox.Show("1) Соберите все колбочки, чтобы завершить уровень; \n" +
@@ -97,19 +96,19 @@ namespace MyGame
                     MakeMove(1, -speed, 0, 5);
                     break;
                 case Keys.D1:
-                    currColor = "wallRed";
+                    currColor = "Red";
                     MakeSkin("koldunred");
                     break;
                 case Keys.D2:
-                    currColor = "wallBlue";
+                    currColor = "Blue";
                     MakeSkin("koldunblue");
                     break;
                 case Keys.D3:
-                    currColor = "wallGreen";
+                    currColor = "Green";
                     MakeSkin("koldungreen");
                     break;
                 case Keys.D4:
-                    currColor = "wallPurple";
+                    currColor = "Purple";
                     MakeSkin("koldunpurple");
                     break;
             }
@@ -148,16 +147,13 @@ namespace MyGame
             }
         }
 
-        public string GetColor()
-        {
-            return currColor;
-        }
-
         private void Update(object sender, EventArgs e)
         {
             WalkController.IsCollide(player);
             if (player.isMoving)
                 player.Move();
+            score.Text = "Очки: " + player.score.ToString();
+
 
             Invalidate();
         }
@@ -168,12 +164,11 @@ namespace MyGame
             this.Width = 1900;
             this.Height = 1000;
 
-
-
             playerSprites = new Bitmap(@"..\..\..\Sprites\" + "koldunred" + ".png");
-            player = new Player(this.Width / 2, this.Height / 2, Hero.walkUpFrames, Hero.walkDownFrames, Hero.walkSideFrames, Hero.stayUpFrames, Hero.stayDownFrames, Hero.staySideFrames);
+            player = new Player(this.Width / 2, this.Height / 2, Hero.walkUpFrames, Hero.walkDownFrames, Hero.walkSideFrames, Hero.stayUpFrames, Hero.stayDownFrames, Hero.staySideFrames, 0);
             player.Init(playerSprites);
             timer1.Start();
+
         }
 
         private void OnPaint(object sender, PaintEventArgs e)
