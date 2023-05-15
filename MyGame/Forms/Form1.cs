@@ -19,6 +19,7 @@ namespace MyGame
         public Image playerSprites;
         public Player player;
         public int speed = 20;
+        public const int Hit = 24;
         public int currAnimation;
         public string skin;
         public int currFlip;
@@ -56,12 +57,6 @@ namespace MyGame
         }
 
 
-        /// <summary>
-        /// Метод перемещает персонажа при помощи WASD управления
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        /// 
         private void MakeMove(int isFlip, int speedX, int speedY, int numberAnimation)
         {
             player.flip = isFlip;
@@ -79,6 +74,12 @@ namespace MyGame
             player.Init(playerSprites);
         }
 
+        /// <summary>
+        /// Метод перемещает персонажа при помощи WASD управления
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// 
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
@@ -119,6 +120,7 @@ namespace MyGame
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        /// 
         private void OnKeyUp(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
@@ -152,6 +154,32 @@ namespace MyGame
             WalkController.IsCollide(player);
             if (player.isMoving)
                 player.Move();
+
+            /*for (int i = player.posX / MapController.cellSizeX; i < (player.posX + MapController.cellSizeX) / MapController.cellSizeX; i++)
+            {
+                for (int j = player.posY / MapController.cellSizeY; j < (player.posY + MapController.cellSizeY) / MapController.cellSizeY; j++)
+                {
+                    if (MapController.map[j, i] == 3)
+                    {
+                        player.score += 1;
+                        MapController.map[j, i] = 1;
+                        this.Invalidate();
+                    }
+
+                    else if (MapController.map[j, i] == 0 || MapController.map[j, i] == 2)
+                    {
+                        if (player.dirY > 0)
+                            player.dirY -= Hit;
+                        else if (player.dirY < 0)
+                            player.dirY += Hit;
+                        else if (player.dirX > 0)
+                            player.dirX -= Hit;
+                        else
+                            player.dirX += Hit;
+                    }
+                }
+            }*/
+
             score.Text = "Очки: " + player.score.ToString();
 
 
@@ -171,7 +199,7 @@ namespace MyGame
 
         }
 
-        private void OnPaint(object sender, PaintEventArgs e)
+        public void OnPaint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
             MapController.GetMap(currColor);
