@@ -16,5 +16,4 @@ namespace MyGame.Models
         public static int stayDownFrames = 3;
         public static int staySideFrames = 3;
     }
-
 }

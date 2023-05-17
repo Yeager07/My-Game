@@ -23,11 +23,13 @@ namespace MyGame
         public string skin;
         public int currFlip;
         public string currColor = "Red";
+        private MapController mapController;
 
         public Form1()
         {
             InitializeComponent();
-
+            Map.InitMaps();
+            mapController = new();
             timer1.Interval = 5;
             timer1.Tick += new EventHandler(Update);
 
@@ -36,7 +38,8 @@ namespace MyGame
                 "3) С помощью клавиш '1', '2', '3', '4' (не на Num-паде) вы сможете менять цвет комнаты (попробуйте, и узнаете зачем это нужно);\n" +
                 "4) Управление осуществляется клавишами-стрелочками вашего устройства;\n" +
                 "5) Движение по диагонали запрещено; \n" +
-                "Удачи, у вас все получится!!! \n", "Правила Игры") ;
+                "6) Чтобы собрать колбочку, пройдите под ней; \n" +
+                "Удачи, у вас все получится!!! \n", "Правила Игры");
 
             KeyDown += new KeyEventHandler(OnKeyDown);
             KeyUp += new KeyEventHandler(OnKeyUp);
@@ -51,7 +54,6 @@ namespace MyGame
                 if (result != DialogResult.Yes)
                     eventArgs.Cancel = true;
             };
-
             Init();
         }
 
@@ -154,31 +156,31 @@ namespace MyGame
 
         private void Update(object sender, EventArgs e)
         {
-            WalkController.IsCollide(player);
+            WalkController walkController = new();
+            walkController.mapController = mapController;
+            walkController.IsCollide(player);
+
             if (player.isMoving)
                 player.Move();
 
-            for (int i = player.posX / MapController.cellSizeX; i < (player.posX + MapController.cellSizeX) / MapController.cellSizeX; i++)
+            for (int i = player.posX / mapController.cellSizeX; i < (player.posX + mapController.cellSizeX) / mapController.cellSizeX; i++)
             {
-                for (int j = player.posY / MapController.cellSizeY; j < (player.posY + MapController.cellSizeY) / MapController.cellSizeY; j++)
+                for (int j = player.posY / mapController.cellSizeY; j < (player.posY + mapController.cellSizeY) / mapController.cellSizeY; j++)
                 {
-                    if (MapController.map[j, i] == 3)
+                    if (mapController.map[j, i] == 3)
                     {
                         player.score += 1;
                     }
-                    this.Invalidate();
                 }
             }
 
             score.Text = "Очки: " + player.score.ToString();
-
-
             Invalidate();
         }
 
         private void Init()
         {
-            MapController.Init();
+            mapController.Init();
             this.Width = 1900;
             this.Height = 1000;
 
@@ -186,35 +188,20 @@ namespace MyGame
             player = new Player(this.Width / 2, this.Height / 2, Hero.walkUpFrames, Hero.walkDownFrames, Hero.walkSideFrames, Hero.stayUpFrames, Hero.stayDownFrames, Hero.staySideFrames, 0);
             player.Init(playerSprites);
             timer1.Start();
-
         }
 
         public void OnPaint(object sender, PaintEventArgs e)
         {
-            //var mapGlobal = new Map();
             Graphics g = e.Graphics;
-            MapController.GetMap(currColor);
-            for (int i = player.posX / MapController.cellSizeX; i < (player.posX + MapController.cellSizeX) / MapController.cellSizeX; i++)
-            {
-                for (int j = player.posY / MapController.cellSizeY; j < (player.posY + MapController.cellSizeY) / MapController.cellSizeY; j++)
-                {
-                    if (MapController.map[j, i] == 3)
-                    {
-                        /*mapGlobal.blueMap[j, i] = 1;
-                        mapGlobal.redMap[j, i] = 1;
-                        mapGlobal.purpleMap[j, i] = 1;
-                        mapGlobal.redMap[j, i] = 1;*/
-                        MapController.map[j, i] = 1;
-                        if(MapController.map[j, i] == 1)
-                            MapController.DrawMap(g, currColor);
-                        //MapController.GetMap(player.color);
-                    }
-                    else
-                        MapController.DrawMap(g, currColor);
-                }
-            }
-            player.PlayAnimation(g);
+            mapController.GetMap(currColor);
+            mapController.DrawMap(g, currColor);
 
+            for (int i = player.posX / mapController.cellSizeX; i < (player.posX + mapController.cellSizeX) / mapController.cellSizeX; i++)
+                for (int j = player.posY / mapController.cellSizeY; j < (player.posY + mapController.cellSizeY) / mapController.cellSizeY; j++)
+                    if (mapController.map[j, i] == 3)
+                        mapController.map[j, i] = 1;
+
+            player.PlayAnimation(g);
         }
     }
 }

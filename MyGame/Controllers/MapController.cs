@@ -11,40 +11,43 @@ namespace MyGame.Controllers
 {
     public class MapController
     {
-        public static int[,] map;
+        public int[,] map;
+        public bool redraw;
 
         // Величины квадратов
-        public static int cellSizeX = 51;
-        public static int cellSizeY = 51;
+        public int cellSizeX = 51;
+        public int cellSizeY = 51;
 
 
-        public static Image imgMap;
+        public Image imgMap;
 
-        public static int cellLimitX;
-        public static int cellLimitY;
+        public int cellLimitX;
+        public int cellLimitY;
 
-        public static void Init()
+        public MapController()
+        {
+            redraw = true;
+        }
+
+        public void Init()
         {
             imgMap = new Bitmap(@"..\..\..\Sprites\Back.png");
         }
 
-        public static void DrawMap(Graphics g, string currColor)
+        public void DrawMap(Graphics g, string currColor)
         {
             cellLimitX = GetWidth() / cellSizeX;
             cellLimitY = GetHeight() / cellSizeY;
 
             for (int i = 0; i < cellLimitY; i++)
-            {
                 for (int j = 0; j < cellLimitX; j++)
                 {
                     if (map[i, j] == 2)
-                    {
                         g.DrawImage(new Bitmap(@"..\..\..\Sprites\wall" + currColor + ".png"), new Rectangle(new Point(cellSizeX * j, cellSizeY * i), new Size(cellSizeX, cellSizeY)), 0, 0, 59, 59, GraphicsUnit.Pixel);
-                    }
-                    else if (map[i,j] == 3)
-                    {
+
+                    else if (map[i, j] == 3)
                         g.DrawImage(new Bitmap(@"..\..\..\Sprites\glass" + currColor + ".png"), cellSizeX * j, cellSizeY * i, 52, 52);
-                    }
+
                     else
                         g.DrawImage(imgMap,
                         new Rectangle(new Point(cellSizeX * j, cellSizeY * i), new Size(cellSizeX, cellSizeY)),
@@ -52,29 +55,31 @@ namespace MyGame.Controllers
                         cellSizeX, cellSizeY,
                         GraphicsUnit.Pixel);
                 }
-            }
         }
 
-        public static int[,] GetMap(string color)
+        public int[,] GetMap(string color)
         {
-            var mapGlobal = new Map();
             if (color == "Green")
-                map = mapGlobal.greenMap;
+                map = Map.greenMap;
+
             else if (color == "Purple")
-                map = mapGlobal.purpleMap;
+                map = Map.purpleMap;
+
             else if (color == "Blue")
-                map = mapGlobal.blueMap;
+                map = Map.blueMap;
+
             else
-                map = mapGlobal.redMap;
+                map = Map.redMap;
+
             return map;
         }
 
-        public static int GetWidth()
+        public int GetWidth()
         {
             return imgMap.Size.Width;
         }
 
-        public static int GetHeight()
+        public int GetHeight()
         {
             return imgMap.Size.Height;
         }
