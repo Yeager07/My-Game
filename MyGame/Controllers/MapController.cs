@@ -9,14 +9,15 @@ using MyGame.Entites;
 
 namespace MyGame.Controllers
 {
-    public static class MapController
+    public class MapController
     {
+        public static int[,] map;
+
         // Величины квадратов
         public static int cellSizeX = 51;
         public static int cellSizeY = 51;
 
 
-        public static int[,] map;
         public static Image imgMap;
 
         public static int cellLimitX;

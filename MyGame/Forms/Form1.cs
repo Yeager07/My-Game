@@ -19,7 +19,6 @@ namespace MyGame
         public Image playerSprites;
         public Player player;
         public int speed = 20;
-        public const int Hit = 24;
         public int currAnimation;
         public string skin;
         public int currFlip;
@@ -98,18 +97,22 @@ namespace MyGame
                     break;
                 case Keys.D1:
                     currColor = "Red";
+                    player.color = currColor;
                     MakeSkin("koldunred");
                     break;
                 case Keys.D2:
                     currColor = "Blue";
+                    player.color = currColor;
                     MakeSkin("koldunblue");
                     break;
                 case Keys.D3:
                     currColor = "Green";
+                    player.color = currColor;
                     MakeSkin("koldungreen");
                     break;
                 case Keys.D4:
                     currColor = "Purple";
+                    player.color = currColor;
                     MakeSkin("koldunpurple");
                     break;
             }
@@ -155,30 +158,17 @@ namespace MyGame
             if (player.isMoving)
                 player.Move();
 
-            /*for (int i = player.posX / MapController.cellSizeX; i < (player.posX + MapController.cellSizeX) / MapController.cellSizeX; i++)
+            for (int i = player.posX / MapController.cellSizeX; i < (player.posX + MapController.cellSizeX) / MapController.cellSizeX; i++)
             {
                 for (int j = player.posY / MapController.cellSizeY; j < (player.posY + MapController.cellSizeY) / MapController.cellSizeY; j++)
                 {
                     if (MapController.map[j, i] == 3)
                     {
                         player.score += 1;
-                        MapController.map[j, i] = 1;
-                        this.Invalidate();
                     }
-
-                    else if (MapController.map[j, i] == 0 || MapController.map[j, i] == 2)
-                    {
-                        if (player.dirY > 0)
-                            player.dirY -= Hit;
-                        else if (player.dirY < 0)
-                            player.dirY += Hit;
-                        else if (player.dirX > 0)
-                            player.dirX -= Hit;
-                        else
-                            player.dirX += Hit;
-                    }
+                    this.Invalidate();
                 }
-            }*/
+            }
 
             score.Text = "Очки: " + player.score.ToString();
 
@@ -201,9 +191,28 @@ namespace MyGame
 
         public void OnPaint(object sender, PaintEventArgs e)
         {
+            //var mapGlobal = new Map();
             Graphics g = e.Graphics;
             MapController.GetMap(currColor);
-            MapController.DrawMap(g, currColor);
+            for (int i = player.posX / MapController.cellSizeX; i < (player.posX + MapController.cellSizeX) / MapController.cellSizeX; i++)
+            {
+                for (int j = player.posY / MapController.cellSizeY; j < (player.posY + MapController.cellSizeY) / MapController.cellSizeY; j++)
+                {
+                    if (MapController.map[j, i] == 3)
+                    {
+                        /*mapGlobal.blueMap[j, i] = 1;
+                        mapGlobal.redMap[j, i] = 1;
+                        mapGlobal.purpleMap[j, i] = 1;
+                        mapGlobal.redMap[j, i] = 1;*/
+                        MapController.map[j, i] = 1;
+                        if(MapController.map[j, i] == 1)
+                            MapController.DrawMap(g, currColor);
+                        //MapController.GetMap(player.color);
+                    }
+                    else
+                        MapController.DrawMap(g, currColor);
+                }
+            }
             player.PlayAnimation(g);
 
         }

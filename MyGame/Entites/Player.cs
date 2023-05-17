@@ -16,6 +16,7 @@ namespace MyGame.Entites
         // Состояние персонажа
         public bool isMoving;
         public int flip;
+        public string color;
         // Фреймы для отрисовки анимации
 
         public int walkUpFrames;

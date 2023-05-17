@@ -19,7 +19,6 @@ namespace MyGame.Controllers
                 {
                     if (MapController.map[j, i] == 3)
                     {
-                        player.score += 1;
                         MapController.map[j, i] = 1;
                     }
 
