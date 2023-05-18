@@ -43,7 +43,7 @@
             this.score.Name = "score";
             this.score.Size = new System.Drawing.Size(53, 19);
             this.score.TabIndex = 0;
-            this.score.Text = "Очки: 0";
+            this.score.Text = "Собрано колбочек: 0 из 23";
             // 
             // Form1
             // 

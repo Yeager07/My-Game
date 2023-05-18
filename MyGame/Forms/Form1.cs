@@ -23,6 +23,7 @@ namespace MyGame
         public string skin;
         public int currFlip;
         public string currColor = "Red";
+        public int currScore;
         private MapController mapController;
 
         public Form1()
@@ -30,7 +31,7 @@ namespace MyGame
             InitializeComponent();
             Map.InitMaps();
             mapController = new();
-            timer1.Interval = 5;
+            timer1.Interval = 10;
             timer1.Tick += new EventHandler(Update);
 
             MessageBox.Show("1) Соберите все колбочки, чтобы завершить уровень; \n" +
@@ -167,14 +168,33 @@ namespace MyGame
             {
                 for (int j = player.posY / mapController.cellSizeY; j < (player.posY + mapController.cellSizeY) / mapController.cellSizeY; j++)
                 {
-                    if (mapController.map[j, i] == 3)
-                    {
-                        player.score += 1;
-                    }
+                    if(mapController.map[j, i] == 3)
+                        currScore += 1;
+                    else
+                        currScore = 0;
                 }
             }
+            if (currColor == "Red")
+            {
+                player.redScore += currScore;
+            }
+            else if (currColor == "Green")
+                player.greenScore += currScore;
+            else if (currColor == "Purple")
+                player.purpleScore += currScore;
+            else
+                player.blueScore += currScore;
 
-            score.Text = "Очки: " + player.score.ToString();
+            if (currColor == "Red")
+                score.Text = "Собрано колбочек: " + player.redScore.ToString() + " из 23";
+            else if (currColor == "Green")
+                score.Text = "Собрано колбочек: " + player.greenScore.ToString() + " из 24";
+            else if (currColor == "Purple")
+                score.Text = "Собрано колбочек: " + player.purpleScore.ToString() + " из 61";
+            else
+                score.Text = "Собрано колбочек: " + player.blueScore.ToString() + " из 49";
+
+
             Invalidate();
         }
 
@@ -185,7 +205,7 @@ namespace MyGame
             this.Height = 1000;
 
             playerSprites = new Bitmap(@"..\..\..\Sprites\" + "koldunred" + ".png");
-            player = new Player(this.Width / 2, this.Height / 2, Hero.walkUpFrames, Hero.walkDownFrames, Hero.walkSideFrames, Hero.stayUpFrames, Hero.stayDownFrames, Hero.staySideFrames, 0);
+            player = new Player(this.Width / 2, this.Height / 2, Hero.walkUpFrames, Hero.walkDownFrames, Hero.walkSideFrames, Hero.stayUpFrames, Hero.stayDownFrames, Hero.staySideFrames, 0, 0, 0, 0);
             player.Init(playerSprites);
             timer1.Start();
         }
