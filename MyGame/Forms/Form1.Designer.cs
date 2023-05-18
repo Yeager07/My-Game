@@ -65,8 +65,8 @@
 
         #endregion
 
-        private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.Label score;
+        public System.Windows.Forms.Timer timer1;
+        public System.Windows.Forms.Label score;
     }
 }
 

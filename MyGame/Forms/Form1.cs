@@ -18,6 +18,7 @@ namespace MyGame
     {
         public Image playerSprites;
         public Player player;
+        //public Form1 form = new Form1();
         public int speed = 20;
         public int currAnimation;
         public string skin;
@@ -31,11 +32,11 @@ namespace MyGame
             InitializeComponent();
             Map.InitMaps();
             mapController = new();
-            timer1.Interval = 10;
+            timer1.Interval = 5;
             timer1.Tick += new EventHandler(Update);
 
             MessageBox.Show("1) Соберите все колбочки, чтобы завершить уровень; \n" +
-                "2) Старайтесь не попасться монстрам (иначе вам придется начать сначала);\n" +
+                "2) Чтоы включить паузу, нажмите 'Escape'; \n" +
                 "3) С помощью клавиш '1', '2', '3', '4' (не на Num-паде) вы сможете менять цвет комнаты (попробуйте, и узнаете зачем это нужно);\n" +
                 "4) Управление осуществляется клавишами-стрелочками вашего устройства;\n" +
                 "5) Движение по диагонали запрещено; \n" +
@@ -55,6 +56,7 @@ namespace MyGame
                 if (result != DialogResult.Yes)
                     eventArgs.Cancel = true;
             };
+
             Init();
         }
 
@@ -117,6 +119,11 @@ namespace MyGame
                     currColor = "Purple";
                     player.color = currColor;
                     MakeSkin("koldunpurple");
+                    break;
+                case Keys.Escape:
+                    timer1.Stop();
+                    MessageBox.Show("Игра приостановлена","Пауза");
+                    timer1.Start();
                     break;
             }
         }
@@ -194,6 +201,12 @@ namespace MyGame
             else
                 score.Text = "Собрано колбочек: " + player.blueScore.ToString() + " из 49";
 
+            if (player.redScore + player.greenScore + player.purpleScore + player.blueScore == 150)
+            {
+                timer1.Stop();
+                MessageBox.Show("Поздравляю, вы собрали почти все колбочки!!!", "Концовка");
+                timer1.Start();
+            }
 
             Invalidate();
         }
