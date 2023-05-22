@@ -32,7 +32,7 @@ namespace MyGame
             InitializeComponent();
             Map.InitMaps();
             mapController = new();
-            timer1.Interval = 5;
+            timer1.Interval = 100;
             timer1.Tick += new EventHandler(Update);
 
             MessageBox.Show("1) Соберите все колбочки, чтобы завершить уровень; \n" +
